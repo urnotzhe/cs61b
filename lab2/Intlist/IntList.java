@@ -82,6 +82,13 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
        IntList pointer=A;
+       if(A==null){
+           A=B;
+           pointer=A;
+       }
+       if (B==null){
+           return null;
+       }
        while(pointer.rest!=null){
            pointer=pointer.rest;
        }
@@ -91,8 +98,7 @@ public class IntList {
            pointer=pointer.rest;
        }
        pointer.rest=new IntList(B.first,null);
-        return null;
-
+       return A;
     }
 
     /**
@@ -100,21 +106,44 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        IntList newL=new IntList(A.first,null);
+        IntList newL;
         IntList originpointer=A;
-        IntList newpointer=newL;
-        while(originpointer.rest!=null){
-            originpointer=originpointer.rest;
-            newpointer.rest=new IntList(originpointer.first,null);
-            newpointer=newpointer.rest;
+        IntList newpointer;
+        if (A==null){
+            if(B==null){
+                return null;
+            }
+            newL=new IntList(B.first,null);
+            newpointer=newL;
+            originpointer=B;
+            while (originpointer.rest!=null){
+                originpointer=originpointer.rest;
+                newpointer.rest=new IntList(originpointer.first,null);
+                newpointer=newpointer.rest;
+            }
+            return newL;
         }
-        originpointer=B;
-        newpointer.rest=new IntList(B.first,null);
-        newpointer=newpointer.rest;
-        while(originpointer.rest!=null){
-            originpointer=originpointer.rest;
-            newpointer.rest=new IntList(originpointer.first,null);
+        else {
+            newL=new IntList(A.first,null);
+            originpointer=A;
+            newpointer=newL;
+            while(originpointer.rest!=null){
+                originpointer=originpointer.rest;
+                newpointer.rest=new IntList(originpointer.first,null);
+                newpointer=newpointer.rest;
+                }
+            if(B==null){
+                return newL;
+            }
+            originpointer=B;
+            newpointer.rest=new IntList(B.first,null);
             newpointer=newpointer.rest;
+            while (originpointer.rest!=null){
+                originpointer=originpointer.rest;
+                newpointer.rest=new IntList(originpointer.first,null);
+                newpointer=newpointer.rest;
+            }
+
         }
         return newL;
     }
