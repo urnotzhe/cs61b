@@ -83,22 +83,35 @@ public class IntList {
     public static IntList dcatenate(IntList A, IntList B) {
        IntList pointer=A;
        if(A==null){
-           A=B;
+           if(B==null){
+               return A;
+           }
+           A=new IntList(B.first,null);
+           pointer=B;
+           IntList newpointer=A;
+           while (pointer.rest!=null){
+               pointer=pointer.rest;
+               newpointer.rest=new IntList(pointer.first, null);
+               newpointer=newpointer.rest;
+           }
+           return A;
+       }
+       else {
+           if (B==null){
+               return A;
+           }
            pointer=A;
+           while(pointer.rest!=null){
+               pointer=pointer.rest;
+           }
+           while (B.rest!=null) {
+               pointer.rest = new IntList(B.first, null);
+               B = B.rest;
+               pointer=pointer.rest;
+           }
+           pointer.rest=new IntList(B.first,null);
+           return A;
        }
-       if (B==null){
-           return null;
-       }
-       while(pointer.rest!=null){
-           pointer=pointer.rest;
-       }
-       while (B.rest!=null) {
-           pointer.rest = new IntList(B.first, null);
-           B = B.rest;
-           pointer=pointer.rest;
-       }
-       pointer.rest=new IntList(B.first,null);
-       return A;
     }
 
     /**
@@ -272,15 +285,13 @@ public class IntList {
         return out.toString();
     }
   public static void main(String[]args){
-    IntList A = new IntList(3,null);
-    A=new IntList(2,A);
-    A=new IntList(1,A);
+    IntList A = null;
 
     IntList B=new IntList(1,null);
     B=new IntList(2,B);
     B=new IntList(1,B);
 
-    IntList newL=IntList.catenate(A,B);
+    A=IntList.dcatenate(A,B);
    }
 
 }
