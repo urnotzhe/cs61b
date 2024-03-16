@@ -81,8 +81,18 @@ public class IntList {
      */
 
     public static IntList dcatenate(IntList A, IntList B) {
-        //TODO:  fill in method
+       IntList pointer=A;
+       while(pointer.rest!=null){
+           pointer=pointer.rest;
+       }
+       while (B.rest!=null) {
+           pointer.rest = new IntList(B.first, null);
+           B = B.rest;
+           pointer=pointer.rest;
+       }
+       pointer.rest=new IntList(B.first,null);
         return null;
+
     }
 
     /**
@@ -90,22 +100,24 @@ public class IntList {
      * * elements of B.  May NOT modify items of A.  Use 'new'.
      */
     public static IntList catenate(IntList A, IntList B) {
-        //TODO:  fill in method
-        return null;
+        IntList newL=new IntList(A.first,null);
+        IntList originpointer=A;
+        IntList newpointer=newL;
+        while(originpointer.rest!=null){
+            originpointer=originpointer.rest;
+            newpointer.rest=new IntList(originpointer.first,null);
+            newpointer=newpointer.rest;
+        }
+        originpointer=B;
+        newpointer.rest=new IntList(B.first,null);
+        newpointer=newpointer.rest;
+        while(originpointer.rest!=null){
+            originpointer=originpointer.rest;
+            newpointer.rest=new IntList(originpointer.first,null);
+            newpointer=newpointer.rest;
+        }
+        return newL;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -230,5 +242,17 @@ public class IntList {
         out.format(")");
         return out.toString();
     }
+  public static void main(String[]args){
+    IntList A = new IntList(3,null);
+    A=new IntList(2,A);
+    A=new IntList(1,A);
+
+    IntList B=new IntList(1,null);
+    B=new IntList(2,B);
+    B=new IntList(1,B);
+
+    IntList newL=IntList.catenate(A,B);
+   }
+
 }
 
